@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    text-align: center;
+}
+
+h1 {
+    margin: 20px;
+}
+
+#aquarium {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    margin: 0 auto;
+
+    background-color: #87ceeb;
+    border: 10px solid #555;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+#fish {
+    position: absolute;
+    width: 100px;
+    left: 100px;
+    top: 200px;
+}
