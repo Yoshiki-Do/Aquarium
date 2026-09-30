@@ -1,11 +1,11 @@
 const aquarium = document.getElementById("aquarium");
-
+let gameDay = 1;
 let selectedFish = null;
 
 const fishData = [
-    {name: "Nemo", type: "Clownfish", age: 1, size: 10, hunger: 50, x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
-    {name: "Dory", type: "Blue Tang", age: 2, size: 15, hunger: 50, x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, hunger: 50, x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
+    {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
+    {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
 ]
 
 const fishImages = [];
@@ -26,7 +26,7 @@ for (let i = 0; i < fishData.length; i++) {
         document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
         document.getElementById("fish-type").textContent = "Type: " + fishData[i].type;
         document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
-        document.getElementById("fish-size").textContent = "Size: " + fishData[i].size + " cm";
+        document.getElementById("fish-size").textContent = "Size: " + fishData[i].size.toFixed(1) + " cm";
         document.getElementById("fish-speed").textContent = "Speed: " + fishData[i].speed;
         document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
         document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i].hunger);
@@ -58,10 +58,21 @@ function swim() {
         const fish = fishImages[i];
 
         const maxX = aquarium.clientWidth - fish.offsetWidth;
+        if (data.x > maxX) {
+            data.x = maxX;
+        }
 
         //movement
         //right/left
-        data.x += data.speed * data.direction;
+        let currentSpeed = data.speed;
+
+        if (getFishStatus(data.hunger) === "Very Hungry") {
+            currentSpeed *= 0.5;
+        } else if (getFishStatus(data.hunger) === "Hungry") {
+            currentSpeed *= 0.8;
+        }
+
+        data.x += currentSpeed * data.direction;
 
         //right end
         if (data.x >= maxX) {
@@ -79,10 +90,20 @@ function swim() {
 
         //up/down
         data.time += data.swimSpeed;
-        const y = data.y + Math.sin(data.time) * data.swimHeight;
 
+        let currentSwimHeight = data.swimHeight;
+
+        if (getFishStatus(data.hunger) === "Very Hungry") {
+            currentSwimHeight *= 0.3;
+        } else if (getFishStatus(data.hunger) === "Hungry") {
+            currentSwimHeight *= 0.7;
+        }
+        const y = data.y + Math.sin(data.time) * currentSwimHeight;
+
+        //fish display
         fish.style.left = data.x + "px";
         fish.style.top = y + "px";
+        fish.style.width = data.size * 10 + "px"
     }
 
     requestAnimationFrame(swim);
@@ -102,6 +123,7 @@ function getFishStatus(hunger) {
     return "Very Hungry";
 }
 
+//fish hunger decay
 setInterval(function() {
     for (let i = 0; i < fishData.length; i++) {
         if (fishData[i].hunger > 0) {
@@ -113,4 +135,26 @@ setInterval(function() {
         document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
         document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish.hunger);
     }
+
 }, 5000);
+
+//day system
+setInterval(function() {
+    gameDay += 1;
+
+    for (let i = 0; i < fishData.length; i++) {
+        fishData[i].age += 1;
+        fishData[i].size += 0.1;
+        if (fishData[i].size > fishData[i].maxSize) {
+            fishData[i].size = fishData[i].maxSize;
+        }
+    }
+    
+    document.getElementById("game-day").textContent = "Day: " +gameDay;
+
+    if (selectedFish !== null) {
+        document.getElementById("fish-age").textContent = "Age: " + selectedFish.age;
+        document.getElementById("fish-size").textContent = "Size: " + selectedFish.size.toFixed(1) + " cm";
+    }
+
+}, 30000);
