@@ -88,3 +88,15 @@ function swim() {
 }
 
 swim();
+
+setInterval(function() {
+    for (let i = 0; i < fishData.length; i++) {
+        if (fishData[i].hunger > 0) {
+            fishData[i].hunger -= 1;
+        }
+    }
+
+    if (selectedFish !== null) {
+        document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
+    }
+}, 5000);
