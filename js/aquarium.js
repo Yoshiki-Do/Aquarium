@@ -29,7 +29,7 @@ for (let i = 0; i < fishData.length; i++) {
         document.getElementById("fish-size").textContent = "Size: " + fishData[i].size + " cm";
         document.getElementById("fish-speed").textContent = "Speed: " + fishData[i].speed;
         document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
-        
+        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i].hunger);
     });
 
     if (fishData[i].direction === 1) {
@@ -48,6 +48,7 @@ feedButton.addEventListener("click", function() {
         }
         
         document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
+        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish.hunger);
     }
 });
 
@@ -89,6 +90,18 @@ function swim() {
 
 swim();
 
+function getFishStatus(hunger) {
+    if (hunger >= 70) {
+        return "Healthy";
+    }
+
+    if (hunger >= 30) {
+        return "Hungry";
+    }
+
+    return "Very Hungry";
+}
+
 setInterval(function() {
     for (let i = 0; i < fishData.length; i++) {
         if (fishData[i].hunger > 0) {
@@ -98,5 +111,6 @@ setInterval(function() {
 
     if (selectedFish !== null) {
         document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
+        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish.hunger);
     }
 }, 5000);
