@@ -1,9 +1,9 @@
 const aquarium = document.getElementById("aquarium");
 
 const fishData = [
-    {name: "Nemo", x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
-    {name: "Dory", x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
-    {name: "Goldie", x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
+    {name: "Nemo", type: "Clownfish", age: 1, size: 10, x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
+    {name: "Dory", type: "Blue Tang", age: 2, size: 15, x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
 ]
 
 const fishImages = [];
@@ -21,6 +21,9 @@ for (let i = 0; i < fishData.length; i++) {
 
     fish.addEventListener("click", function() {
         document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
+        document.getElementById("fish-type").textContent = "Type: " + fishData[i].type;
+        document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
+        document.getElementById("fish-size").textContent = "Size: " + fishData[i].size + " cm";
         document.getElementById("fish-speed").textContent = "Speed: " + fishData[i].speed;
     })
 
