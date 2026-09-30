@@ -1,9 +1,9 @@
 const aquarium = document.getElementById("aquarium");
 
 const fishData = [
-    {x: 100, y: 150, speed: 2, direction: 1, time: 0},
-    {x: 400, y: 250, speed: 1.5, direction: -1, time: 2},
-    {x: 600, y: 350, speed: 2.5, direction: 1, time: 4},
+    {x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
+    {x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
+    {x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
 ]
 
 const fishImages = [];
@@ -50,8 +50,8 @@ function swim() {
         }
 
         //up/down
-        data.time += 0.05;
-        const y = data.y + Math.sin(data.time) * 20;
+        data.time += data.swimSpeed;
+        const y = data.y + Math.sin(data.time) * data.swimHeight;
 
         fish.style.left = data.x + "px";
         fish.style.top = y + "px";
