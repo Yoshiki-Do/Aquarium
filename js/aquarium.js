@@ -1,9 +1,11 @@
 const aquarium = document.getElementById("aquarium");
 
+let selectedFish = null;
+
 const fishData = [
-    {name: "Nemo", type: "Clownfish", age: 1, size: 10, x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
-    {name: "Dory", type: "Blue Tang", age: 2, size: 15, x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
+    {name: "Nemo", type: "Clownfish", age: 1, size: 10, hunger: 50, x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
+    {name: "Dory", type: "Blue Tang", age: 2, size: 15, hunger: 50, x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, hunger: 50, x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
 ]
 
 const fishImages = [];
@@ -20,17 +22,34 @@ for (let i = 0; i < fishData.length; i++) {
     fishImages.push(fish);
 
     fish.addEventListener("click", function() {
+        selectedFish = fishData[i];
         document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
         document.getElementById("fish-type").textContent = "Type: " + fishData[i].type;
         document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
         document.getElementById("fish-size").textContent = "Size: " + fishData[i].size + " cm";
         document.getElementById("fish-speed").textContent = "Speed: " + fishData[i].speed;
-    })
+        document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
+        
+    });
 
     if (fishData[i].direction === 1) {
         fish.style.transform = "scaleX(-1)";
     }
 }
+
+const feedButton = document.getElementById("feed-button");
+
+feedButton.addEventListener("click", function() {
+    if (selectedFish !== null) {
+        selectedFish.hunger += 20;
+
+        if (selectedFish.hunger > 100) {
+            selectedFish.hunger = 100;
+        }
+        
+        document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
+    }
+});
 
 function swim() {
     for (let i = 0; i < fishData.length; i++) {
