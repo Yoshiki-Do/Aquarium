@@ -1,9 +1,9 @@
 const aquarium = document.getElementById("aquarium");
 
 const fishData = [
-    {x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
-    {x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
-    {x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
+    {name: "Nemo", x: 100, y: 150, speed: 2, direction: 1, time: 0, swimHeight: 15, swimSpeed: 0.04},
+    {name: "Dory", x: 400, y: 250, speed: 1.5, direction: -1, time: 2, swimHeight: 25, swimSpeed: 0.06},
+    {name: "Goldie", x: 600, y: 350, speed: 2.5, direction: 1, time: 4, swimHeight: 10, swimSpeed: 0.03},
 ]
 
 const fishImages = [];
@@ -18,6 +18,11 @@ for (let i = 0; i < fishData.length; i++) {
     aquarium.appendChild(fish);
 
     fishImages.push(fish);
+
+    fish.addEventListener("click", function() {
+        document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
+        document.getElementById("fish-speed").textContent = "Speed: " + fishData[i].speed;
+    })
 
     if (fishData[i].direction === 1) {
         fish.style.transform = "scaleX(-1)";

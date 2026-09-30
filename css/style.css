@@ -26,3 +26,16 @@ h1 {
     position: absolute;
     width: 100px;
 }
+
+#fish-info {
+    width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+#fish-info h2 {
+    margin-top: 0;
+}
