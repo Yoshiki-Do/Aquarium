@@ -40,16 +40,59 @@ for (let i = 0; i < fishData.length; i++) {
 const feedButton = document.getElementById("feed-button");
 
 feedButton.addEventListener("click", function() {
-    if (selectedFish !== null) {
-        selectedFish.hunger += 20;
+    const food  = document.createElement("div");
 
-        if (selectedFish.hunger > 100) {
-            selectedFish.hunger = 100;
+    food.className = "food";
+
+    food.style.left = Math.random() * (aquarium.clientWidth - 20) + "px";
+    food.style.top = "10px";
+
+    aquarium.appendChild(food);
+
+    let foodY = 10;
+
+    const foodFall = setInterval(function() {
+        foodY += 2;
+
+        food.style.top = foodY + "px";
+
+        for (let i = 0; i < fishData.length; i++) {
+            const fish =  fishImages[i];
+            const data = fishData[i];
+
+            const fishCenterX = data.x + fish.offsetWidth / 2;
+            const fishCenterY = data.y + fish.offsetHeight / 2;
+
+            const foodX = parseFloat(food.style.left) + 6;
+            const foodCenterY = foodY + 6;
+
+            const distanceX = Math.abs(fishCenterX - foodX);
+            const distanceY = Math.abs(fishCenterY - foodCenterY);
+
+            if (distanceX < 40 && distanceY < 40) {
+                data.hunger += 20;
+
+                if (data.hunger > 100) {
+                    data.hunger = 100;
+                }
+
+                food.remove();
+                clearInterval(foodFall);
+
+                if (selectedFish === data) {
+                    document.getElementById("fish-hunger").textContent = "Hunger: " + data.hunger;
+                    document.getElementById("fish-status").textContent = "Status: " + getFishStatus(data.hunger);
+                }
+
+                break;
+            }
         }
-        
-        document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
-        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish.hunger);
-    }
+
+        if (foodY >= aquarium.clientHeight - 20) {
+            clearInterval(foodFall);
+        }
+    }, 30);
+
 });
 
 function swim() {

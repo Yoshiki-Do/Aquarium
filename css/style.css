@@ -39,3 +39,12 @@ h1 {
 #fish-info h2 {
     margin-top: 0;
 }
+
+.food {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: brown;
+    border-radius: 50%;
+    z-index: 10;
+}
