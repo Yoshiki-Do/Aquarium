@@ -62,16 +62,22 @@ feedButton.addEventListener("click", function() {
             const fish =  fishImages[i];
             const data = fishData[i];
 
-            const fishCenterX = data.x + fish.offsetWidth / 2;
-            const fishCenterY = data.y + fish.offsetHeight / 2;
+            let fishMouthX;
+            if (data.direction === 1) {
+                fishMouthX = data.x + fish.offsetWidth;
+            } else {
+                fishMouthX = data.x;
+            }
+
+            const fishMouthY = data.y + fish.offsetHeight / 2;
 
             const foodX = parseFloat(food.style.left) + 6;
             const foodCenterY = foodY + 6;
 
-            const distanceX = Math.abs(fishCenterX - foodX);
-            const distanceY = Math.abs(fishCenterY - foodCenterY);
+            const distanceX = Math.abs(fishMouthX - foodX);
+            const distanceY = Math.abs(fishMouthY - foodCenterY);
 
-            if (distanceX < 40 && distanceY < 40) {
+            if (distanceX < 20 && distanceY < 20) {
                 data.hunger += 20;
 
                 if (data.hunger > 100) {
@@ -116,12 +122,13 @@ function swim() {
         const fish = fishImages[i];
 
         const maxX = aquarium.clientWidth - fish.offsetWidth;
+
         if (data.x > maxX) {
             data.x = maxX;
         }
 
         //movement
-        //right/left
+
         let currentSpeed = data.speed;
 
         if (getFishStatus(data.hunger) === "Very Hungry") {
@@ -130,8 +137,11 @@ function swim() {
             currentSpeed *= 0.8;
         }
 
+        let nearestFood = null;
+
         if (foods.length > 0) {
-            let nearestFood = foods[0];
+            nearestFood = foods[0];
+
             let nearestDistance = Math.abs(parseFloat(foods[0].style.left) - data.x);
 
             for (let j = 1; j < foods.length; j++) {
@@ -145,26 +155,45 @@ function swim() {
 
             const foodX = parseFloat(nearestFood.style.left);
 
-            if (foodX > data.x + 10) {
+            const fishCenterX = data.x + fish.offsetWidth / 2;
+
+            if (foodX > fishCenterX + 30) {
                 data.direction = 1;
                 fish.style.transform = "scaleX(-1)";
-            } else if (foodX < data.x - 10) {
+            } else if (foodX < fishCenterX - 30) {
                 data.direction = -1;
                 fish.style.transform = "scaleX(1)";
             }
 
             const foodY = parseFloat(nearestFood.style.top);
-
             const fishY = data.y;
 
             const verticalDifference = foodY - fishY;
 
             if (Math.abs(verticalDifference) > 10) {
-                data.y += verticalDifference * 0.05;
+                data.y += verticalDifference * 0.02;
             }
         }
 
-        data.x += currentSpeed * data.direction;
+        //x-axis movement
+        if (nearestFood !== null) {
+            const foodX = parseFloat(nearestFood.style.left);
+
+            let fishMouthX;
+
+            if (data.direction === 1) {
+                fishMouthX = data.x + fish.offsetWidth;
+            } else {
+                fishMouthX = data.x;
+            }
+
+            if (Math.abs(foodX - fishMouthX) > 10) {
+                data.x += currentSpeed * data.direction;
+            }
+
+        } else {
+            data.x += currentSpeed * data.direction
+        }
 
         //right end
         if (data.x >= maxX) {
@@ -190,6 +219,7 @@ function swim() {
         } else if (getFishStatus(data.hunger) === "Hungry") {
             currentSwimHeight *= 0.7;
         }
+
         const y = data.y + Math.sin(data.time) * currentSwimHeight;
 
         //fish display
