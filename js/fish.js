@@ -1,7 +1,7 @@
 var fishData = [
     {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, health: 100, x: 100, y: 150, moveSpeed: 2, direction: 1, swimTime: 0, swimAmplitude: 15, swimFrequency: 0.04},
     {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, health: 100, x: 400, y: 250, moveSpeed: 1.5, direction: -1, swimTime: 2, swimAmplitude: 25, swimFrequency: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 100, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 10, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
 ]
 
 var fishImages = [];
