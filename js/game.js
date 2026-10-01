@@ -4,6 +4,7 @@ let selectedFish = null;
 function updateFishHunger(data) {
     if (data.hunger > 0) {
         data.hunger -= 1;
+    }
 }
 
 //fish hunger decay
