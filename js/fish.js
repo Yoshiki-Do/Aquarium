@@ -1,7 +1,7 @@
 var fishData = [
-    {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, x: 100, y: 150, moveSpeed: 2, direction: 1, swimTime: 0, swimAmplitude: 15, swimFrequency: 0.04},
-    {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, x: 400, y: 250, moveSpeed: 1.5, direction: -1, swimTime: 2, swimAmplitude: 25, swimFrequency: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
+    {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, health: 100, x: 100, y: 150, moveSpeed: 2, direction: 1, swimTime: 0, swimAmplitude: 15, swimFrequency: 0.04},
+    {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, health: 100, x: 400, y: 250, moveSpeed: 1.5, direction: -1, swimTime: 2, swimAmplitude: 25, swimFrequency: 0.06},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 100, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
 ]
 
 var fishImages = [];
@@ -24,6 +24,7 @@ for (let i = 0; i < fishData.length; i++) {
         document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
         document.getElementById("fish-size").textContent = "Size: " + fishData[i].size.toFixed(1) + " cm";
         document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
+        document.getElementById("fish-health").textContent = "Health: " + fishData[i].health;
         document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i].hunger);
     });
 

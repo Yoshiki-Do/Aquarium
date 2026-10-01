@@ -13,6 +13,10 @@ feedButton.addEventListener("click", function() {
     aquarium.appendChild(food);
     foods.push(food);
 
+    if (waterQuality > 0) {
+        waterQuality -= 1;
+    }
+
     let foodY = 10;
 
     const foodFall = setInterval(function() {
