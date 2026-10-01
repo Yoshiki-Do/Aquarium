@@ -103,11 +103,21 @@ function updateFishDirection(data, fish, foodX) {
     }
 }
 
-function moveFishTowardFoodY(data, foodY){
+function moveFishTowardFoodY(data, fish, foodY){
     const verticalDifference = foodY - data.y;
 
     if (Math.abs(verticalDifference) > 10) {
         data.y += verticalDifference * 0.02;
+    }
+
+    const maxY = aquarium.clientHeight - fish.offsetHeight;
+
+    if (data.y < 0) {
+        data.y = 0;
+    }
+
+    if (data.y > maxY) {
+        data.y = maxY;
     }
 }
 
@@ -164,7 +174,7 @@ function swim() {
 
             const foodY = parseFloat(nearestFood.style.top);
             
-            moveFishTowardFoodY(data, foodY);
+            moveFishTowardFoodY(data, fish, foodY);
 
             moveFishTowardFoodX(data, fish, foodX, currentMoveSpeed);
 
