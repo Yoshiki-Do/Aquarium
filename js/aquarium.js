@@ -9,6 +9,7 @@ const fishData = [
 ]
 
 const fishImages = [];
+const foods = [];
 
 for (let i = 0; i < fishData.length; i++) {
     const fish = document.createElement("img");
@@ -48,6 +49,7 @@ feedButton.addEventListener("click", function() {
     food.style.top = "10px";
 
     aquarium.appendChild(food);
+    foods.push(food);
 
     let foodY = 10;
 
@@ -76,6 +78,12 @@ feedButton.addEventListener("click", function() {
                     data.hunger = 100;
                 }
 
+                const foodIndex = foods.indexOf(food);
+
+                if(foodIndex !== -1) {
+                    foods.splice(foodIndex, 1);
+                }
+
                 food.remove();
                 clearInterval(foodFall);
 
@@ -89,6 +97,13 @@ feedButton.addEventListener("click", function() {
         }
 
         if (foodY >= aquarium.clientHeight - 20) {
+            const foodIndex = foods.indexOf(food);
+
+            if (foodIndex !== -1){
+                foods.splice(foodIndex, 1);
+            }
+
+            food.remove();
             clearInterval(foodFall);
         }
     }, 30);
@@ -113,6 +128,40 @@ function swim() {
             currentSpeed *= 0.5;
         } else if (getFishStatus(data.hunger) === "Hungry") {
             currentSpeed *= 0.8;
+        }
+
+        if (foods.length > 0) {
+            let nearestFood = foods[0];
+            let nearestDistance = Math.abs(parseFloat(foods[0].style.left) - data.x);
+
+            for (let j = 1; j < foods.length; j++) {
+                const foodDistance = Math.abs(parseFloat(foods[j].style.left) - data.x);
+
+                if (foodDistance < nearestDistance) {
+                    nearestFood = foods[j];
+                    nearestDistance = foodDistance;
+                }
+            }
+
+            const foodX = parseFloat(nearestFood.style.left);
+
+            if (foodX > data.x + 10) {
+                data.direction = 1;
+                fish.style.transform = "scaleX(-1)";
+            } else if (foodX < data.x - 10) {
+                data.direction = -1;
+                fish.style.transform = "scaleX(1)";
+            }
+
+            const foodY = parseFloat(nearestFood.style.top);
+
+            const fishY = data.y;
+
+            const verticalDifference = foodY - fishY;
+
+            if (Math.abs(verticalDifference) > 10) {
+                data.y += verticalDifference * 0.05;
+            }
         }
 
         data.x += currentSpeed * data.direction;
