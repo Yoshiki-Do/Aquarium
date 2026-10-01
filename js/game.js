@@ -11,7 +11,7 @@ setInterval(function() {
 
     if (selectedFish !== null) {
         document.getElementById("fish-hunger").textContent = "Hunger: " + selectedFish.hunger;
-        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish.hunger);
+        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(selectedFish);
     }
 
 }, 5000);

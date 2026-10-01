@@ -61,7 +61,7 @@ feedButton.addEventListener("click", function() {
 
                 if (selectedFish === data) {
                     document.getElementById("fish-hunger").textContent = "Hunger: " + data.hunger;
-                    document.getElementById("fish-status").textContent = "Status: " + getFishStatus(data.hunger);
+                    document.getElementById("fish-status").textContent = "Status: " + getFishStatus(data);
                 }
 
                 break;

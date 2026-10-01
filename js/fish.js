@@ -25,7 +25,7 @@ for (let i = 0; i < fishData.length; i++) {
         document.getElementById("fish-size").textContent = "Size: " + fishData[i].size.toFixed(1) + " cm";
         document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
         document.getElementById("fish-health").textContent = "Health: " + fishData[i].health;
-        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i].hunger);
+        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i]);
     });
 
     if (fishData[i].direction === 1) {
@@ -33,12 +33,20 @@ for (let i = 0; i < fishData.length; i++) {
     }
 }
 
-function getFishStatus(hunger) {
-    if (hunger >= 70) {
-        return "Healthy";
+function getFishStatus(data) {
+    if (data.health === 0) {
+        return "Dead"
     }
 
-    if (hunger >= 30) {
+    if (data.health <= 30) {
+        return "Unhealthy";
+    }
+
+    if (data.hunger >= 70) {
+        return "Healthy"
+    }
+
+    if (data.hunger >= 30) {
         return "Hungry";
     }
 
@@ -47,9 +55,9 @@ function getFishStatus(hunger) {
 
 function getCurrentMoveSpeed(data) {
     let currentMoveSpeed = data.moveSpeed;
-    const status = getFishStatus(data.hunger);
+    const status = getFishStatus(data);
 
-    if (status === "Very Hungry") {
+    if (status === "Very Hungry" || status === "Unhealthy") {
         currentMoveSpeed *= 0.5;
     } else if (status === "Hungry") {
         currentMoveSpeed *= 0.8;
@@ -60,9 +68,9 @@ function getCurrentMoveSpeed(data) {
 
 function getCurrentSwimHeight(data) {
     let currentSwimHeight = data.swimAmplitude;
-    const status = getFishStatus(data.hunger);
+    const status = getFishStatus(data);
 
-    if (status === "Very Hungry") {
+    if (status === "Very Hungry" || status === "Unhealthy") {
         currentSwimHeight *= 0.3;
     } else if (status === "Hungry") {
         currentSwimHeight *= 0.7;
@@ -162,6 +170,10 @@ function swim() {
         const data = fishData[i];
         const fish = fishImages[i];
 
+        if (data.health <= 0) {
+            continue;
+        }
+
         const maxX = aquarium.clientWidth - fish.offsetWidth;
 
         let currentMoveSpeed = getCurrentMoveSpeed(data);
@@ -196,5 +208,3 @@ function swim() {
 
     requestAnimationFrame(swim);
 }
-
-swim();
