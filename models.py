@@ -13,3 +13,6 @@ class Fish(Base):
     maxSize = Column(Float)
     hunger = Column(Integer)
     health = Column(Integer)
+    moveSpeed = Column(Float)
+    swimAmplitude = Column(Float)
+    swimFrequency = Column(Float)

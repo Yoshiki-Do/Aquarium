@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import random
 from database import engine, SessionLocal
 from models import Base, Fish
 
@@ -11,7 +12,16 @@ db = SessionLocal()
 
 if db.query(Fish).count() == 0:
     fish = Fish(
-        name="Nemo", type="Clownfish", age=1, size=10, maxSize=20, hunger=50, health=100
+        name="Nemo",
+        type="Clownfish",
+        age=1,
+        size=10,
+        maxSize=20,
+        hunger=50,
+        health=100,
+        moveSpeed=random.uniform(1.0, 3.0),
+        swimAmplitude=random.uniform(10.0, 30.0),
+        swimFrequency=random.uniform(0.02, 0.06),
     )
 
     db.add(fish)
@@ -51,6 +61,9 @@ def get_fish():
                 "maxSize": fish.maxSize,
                 "hunger": fish.hunger,
                 "health": fish.health,
+                "moveSpeed": fish.moveSpeed,
+                "swimAmplitude": fish.swimAmplitude,
+                "swimFrequency": fish.swimFrequency,
             }
         )
 

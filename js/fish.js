@@ -5,30 +5,6 @@ fetch("http://127.0.0.1:8000/api/fish")
     .then(data => {
         fishData = data;
 
-        fishData[0].x = 100;
-        fishData[0].y = 150;
-        fishData[0].moveSpeed = 2;
-        fishData[0].direction = 1;
-        fishData[0].swimTime = 0;
-        fishData[0].swimAmplitude = 15;
-        fishData[0].swimFrequency = 0.04;
-
-        fishData[1].x = 400;
-        fishData[1].y = 250;
-        fishData[1].moveSpeed = 1.5;
-        fishData[1].direction = -1;
-        fishData[1].swimTime = 2;
-        fishData[1].swimAmplitude = 25;
-        fishData[1].swimFrequency = 0.06;
-
-        fishData[2].x = 600;
-        fishData[2].y = 350;
-        fishData[2].moveSpeed = 2.5;
-        fishData[2].direction = 1;
-        fishData[2].swimTime = 4;
-        fishData[2].swimAmplitude = 10;
-        fishData[2].swimFrequency = 0.03;
-
         createFish();
     });
 
@@ -36,6 +12,13 @@ var fishImages = [];
 
 function createFish() {
     for (let i = 0; i < fishData.length; i++) {
+        const data = fishData[i];
+
+        data.x = Math.random() * (aquarium.clientWidth - 100);
+        data.y = Math.random() * (aquarium.clientHeight - 100);
+        data.direction = Math.random() < 0.5 ? -1 : 1;
+        data.swimTime = 0;
+
         const fish = document.createElement("img");
 
         fish.src = "images/crownfish.png";
