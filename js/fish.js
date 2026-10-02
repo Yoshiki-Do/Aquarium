@@ -1,35 +1,65 @@
-var fishData = [
-    {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, health: 100, x: 100, y: 150, moveSpeed: 2, direction: 1, swimTime: 0, swimAmplitude: 15, swimFrequency: 0.04},
-    {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, health: 100, x: 400, y: 250, moveSpeed: 1.5, direction: -1, swimTime: 2, swimAmplitude: 25, swimFrequency: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 3, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
-]
+var fishData = []
+
+fetch("http://127.0.0.1:8000/api/fish")
+    .then(response => response.json())
+    .then(data => {
+        fishData = data;
+
+        fishData[0].x = 100;
+        fishData[0].y = 150;
+        fishData[0].moveSpeed = 2;
+        fishData[0].direction = 1;
+        fishData[0].swimTime = 0;
+        fishData[0].swimAmplitude = 15;
+        fishData[0].swimFrequency = 0.04;
+
+        fishData[1].x = 400;
+        fishData[1].y = 250;
+        fishData[1].moveSpeed = 1.5;
+        fishData[1].direction = -1;
+        fishData[1].swimTime = 2;
+        fishData[1].swimAmplitude = 25;
+        fishData[1].swimFrequency = 0.06;
+
+        fishData[2].x = 600;
+        fishData[2].y = 350;
+        fishData[2].moveSpeed = 2.5;
+        fishData[2].direction = 1;
+        fishData[2].swimTime = 4;
+        fishData[2].swimAmplitude = 10;
+        fishData[2].swimFrequency = 0.03;
+
+        createFish();
+    });
 
 var fishImages = [];
 
-for (let i = 0; i < fishData.length; i++) {
-    const fish = document.createElement("img");
+function createFish() {
+    for (let i = 0; i < fishData.length; i++) {
+        const fish = document.createElement("img");
 
-    fish.src = "images/crownfish.png";
-    fish.alt = "Fish";
-    fish.className = "fish";
+        fish.src = "images/crownfish.png";
+        fish.alt = "Fish";
+        fish.className = "fish";
 
-    aquarium.appendChild(fish);
+        aquarium.appendChild(fish);
 
-    fishImages.push(fish);
+        fishImages.push(fish);
 
-    fish.addEventListener("click", function() {
-        selectedFish = fishData[i];
-        document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
-        document.getElementById("fish-type").textContent = "Type: " + fishData[i].type;
-        document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
-        document.getElementById("fish-size").textContent = "Size: " + fishData[i].size.toFixed(1) + " cm";
-        document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
-        document.getElementById("fish-health").textContent = "Health: " + fishData[i].health;
-        document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i]);
-    });
+        fish.addEventListener("click", function() {
+            selectedFish = fishData[i];
+            document.getElementById("fish-name").textContent = "Name: " + fishData[i].name;
+            document.getElementById("fish-type").textContent = "Type: " + fishData[i].type;
+            document.getElementById("fish-age").textContent = "Age: " + fishData[i].age;
+            document.getElementById("fish-size").textContent = "Size: " + fishData[i].size.toFixed(1) + " cm";
+            document.getElementById("fish-hunger").textContent = "Hunger: " + fishData[i].hunger;
+            document.getElementById("fish-health").textContent = "Health: " + fishData[i].health;
+            document.getElementById("fish-status").textContent = "Status: " + getFishStatus(fishData[i]);
+        });
 
-    if (fishData[i].direction === 1) {
-        fish.style.transform = "scaleX(-1)";
+        if (fishData[i].direction === 1) {
+            fish.style.transform = "scaleX(-1)";
+        }
     }
 }
 
