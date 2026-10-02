@@ -9,6 +9,12 @@ h1 {
     margin: 20px;
 }
 
+#water-change-button,
+#feed-button {
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
 #aquarium {
     position: relative;
     width: 800px;
