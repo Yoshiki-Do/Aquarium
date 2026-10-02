@@ -1,6 +1,6 @@
 const aquarium = document.getElementById("aquarium");
 
-let waterQuality = 100;
+let waterQuality = 70;
 
 setInterval(function() {
     if (waterQuality > 0) {

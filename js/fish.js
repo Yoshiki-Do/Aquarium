@@ -1,7 +1,7 @@
 var fishData = [
     {name: "Nemo", type: "Clownfish", age: 1, size: 10, maxSize: 20, hunger: 50, health: 100, x: 100, y: 150, moveSpeed: 2, direction: 1, swimTime: 0, swimAmplitude: 15, swimFrequency: 0.04},
     {name: "Dory", type: "Blue Tang", age: 2, size: 15, maxSize: 30, hunger: 50, health: 100, x: 400, y: 250, moveSpeed: 1.5, direction: -1, swimTime: 2, swimAmplitude: 25, swimFrequency: 0.06},
-    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 10, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
+    {name: "Goldie", type: "Goldfish", age: 1, size: 8, maxSize: 15, hunger: 50, health: 3, x: 600, y: 350, moveSpeed: 2.5, direction: 1, swimTime: 4, swimAmplitude: 10, swimFrequency: 0.03},
 ]
 
 var fishImages = [];
@@ -9,7 +9,7 @@ var fishImages = [];
 for (let i = 0; i < fishData.length; i++) {
     const fish = document.createElement("img");
 
-    fish.src = "images/fish.png";
+    fish.src = "images/crownfish.png";
     fish.alt = "Fish";
     fish.className = "fish";
 
@@ -115,7 +115,7 @@ function updateFishDirection(data, fish, foodX) {
 function moveFishTowardFoodY(data, fish, foodY){
     const verticalDifference = foodY - data.y;
 
-    if (Math.abs(verticalDifference) > 10) {
+    if (Math.abs(verticalDifference) > 5) {
         data.y += verticalDifference * 0.02;
     }
 
@@ -139,7 +139,7 @@ function moveFishTowardFoodX(data, fish, foodX, currentMoveSpeed) {
         fishMouthX = data.x;
     }
 
-    if (Math.abs(foodX - fishMouthX) > 10) {
+    if (Math.abs(foodX - fishMouthX) > 5) {
         data.x += currentMoveSpeed * data.direction;
     }
 }
@@ -162,7 +162,7 @@ function handleFishBoundary(data, fish, maxX) {
 function updateFishDisplay(data, fish, y) {
     fish.style.left = data.x + "px";
     fish.style.top = y + "px";
-    fish.style.width = data.size * 10 + "px"
+    fish.style.width = data.size * 3 + "px"
 }
 
 function swim() {

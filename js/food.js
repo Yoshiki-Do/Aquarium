@@ -20,7 +20,7 @@ feedButton.addEventListener("click", function() {
     let foodY = 10;
 
     const foodFall = setInterval(function() {
-        foodY += 2;
+        foodY += 1;
 
         food.style.top = foodY + "px";
 

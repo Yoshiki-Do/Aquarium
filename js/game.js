@@ -21,17 +21,66 @@ setInterval(function() {
 }, 5000);
 
 function updateFishHealth(data) {
+    const previousHealth = data.health;
+
     if (data.hunger < 50 && data.health > 0) {
         data.health -= 1;
     } else if (data.hunger >= 70 && data.health < 100 && data.health > 0) {
         data.health += 1;
     }
+
     if (waterQuality < 50 && data.health > 0) {
         data.health -= 1;
     } else if (waterQuality >= 70 && data.health < 100 && data.health > 0) {
         data.health += 1;
     }
+
+    if (previousHealth > 0 && data.health === 0) {
+        showDeathPopup(data);
+    }
 }
+
+let deadFish = null;
+
+function showDeathPopup(data) {
+    const deathPopup = document.getElementById("death-popup");
+    const deathMessage = document.getElementById("death-message");
+
+    deadFish = data;
+
+    deathMessage.textContent = data.name + " has died.";
+    deathPopup.style.display ="flex";
+}
+
+const deathOkButton = document.getElementById("death-ok-button");
+
+deathOkButton.addEventListener("click", function() {
+    const deathPopup = document.getElementById("death-popup");
+
+    if (deadFish !== null) {
+        const fishIndex = fishData.indexOf(deadFish);
+
+        if (fishIndex !== -1) {
+            fishImages[fishIndex].remove();
+            fishData.splice(fishIndex, 1);
+            fishImages.splice(fishIndex, 1);
+        }
+        
+        if (selectedFish === deadFish) {
+            selectedFish = null;
+            document.getElementById("fish-name").textContent = "";
+            document.getElementById("fish-type").textContent = "";
+            document.getElementById("fish-age").textContent = "";
+            document.getElementById("fish-size").textContent = "";
+            document.getElementById("fish-hunger").textContent = "";
+            document.getElementById("fish-health").textContent = "";
+            document.getElementById("fish-status").textContent = "";
+        }
+
+        deadFish = null;
+    }
+    deathPopup.style.display = "none";
+});
 
 //fish health
 setInterval(function() {
