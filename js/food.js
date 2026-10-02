@@ -95,10 +95,16 @@ function showHungerIncrease(fish, amount) {
     message.style.color = "limegreen";
     message.style.fontWeight = "bold";
     message.style.zIndex = "20";
+    message.style.transition = "top 1s, opacity 1s";
 
     aquarium.appendChild(message);
 
     setTimeout(function() {
+        message.style.top = (fish.offsetTop - 60) + "px";
+        message.style.opacity = "0";
+    }, 50);
+
+    setTimeout(function() {
         message.remove();
-    }, 1000);
+    }, 1050);
 }
