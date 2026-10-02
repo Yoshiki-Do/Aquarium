@@ -44,6 +44,8 @@ feedButton.addEventListener("click", function() {
             const distanceY = Math.abs(fishMouthY - foodCenterY);
 
             if (distanceX < 20 && distanceY < 20) {
+                showHungerIncrease(fish, 20);
+
                 data.hunger += 20;
 
                 if (data.hunger > 100) {
@@ -81,3 +83,22 @@ feedButton.addEventListener("click", function() {
     }, 30);
 
 });
+
+function showHungerIncrease(fish, amount) {
+    const message = document.createElement("div");
+
+    message.textContent = "+" + amount + " Hunger";
+
+    message.style.position = "absolute";
+    message.style.left = fish.offsetLeft + "px";
+    message.style.top = (fish.offsetTop - 30) + "px";
+    message.style.color = "limegreen";
+    message.style.fontWeight = "bold";
+    message.style.zIndex = "20";
+
+    aquarium.appendChild(message);
+
+    setTimeout(function() {
+        message.remove();
+    }, 1000);
+}
